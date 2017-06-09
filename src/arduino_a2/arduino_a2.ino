@@ -1,4 +1,3 @@
-
 #include <Servo.h>
 #include <Wire.h>
 #include "SPI.h"
@@ -15,6 +14,8 @@
 #define TFT_DC 9
 #define TFT_CS 10
 
+#define ITR_PIN 2
+
 Servo esc;
 
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
@@ -30,26 +31,31 @@ long foobar = 0;
 
 void setup()
 {
-  Serial.begin(19200);
+  Serial.begin(38400);
 
   setupTFT();
   setupESC();
   setupLSM();
   setupIR();
+
+  pinMode(ITR_PIN, INPUT);
+  attachInterrupt(digitalPinToInterrupt(ITR_PIN), ping, RISING);
 }
  
 void loop()
 {
-  if (Serial.available() > 0) {
-    speed = Serial.parseInt();
-    
-    //tft.print("Change speed to: ");
-    //tft.println(speed, DEC);
-  }
+//  if (Serial.available() > 0) {
+//    speed = Serial.parseInt();
+//    
+//    //tft.print("Change speed to: ");
+//    //tft.println(speed, DEC);
+//  }
+
+//Serial.println(digitalRead(ITR_PIN));
 
   esc.write(speed);
 
-  int sensor = digitalRead(IR_SENS);
+//  int sensor = digitalRead(IR_SENS);
 
 //  if (sensor == 0 && completeRound == false) {
 //    rounds++;
@@ -68,15 +74,15 @@ void loop()
 //    time = millis();
 //  }
 
-  Serial.println(sensor);
+//  Serial.println(sensor);
 //  Serial.print(" ");
 
-//  lsm.read();  /* ask it to read in the data */ 
-//
-//  /* Get a new sensor event */ 
-//  sensors_event_t a, m, g, temp;
-//
-//  lsm.getEvent(&a, &m, &g, &temp); 
+  lsm.read();  /* ask it to read in the data */ 
+
+  /* Get a new sensor event */ 
+  sensors_event_t a, m, g, temp;
+
+  lsm.getEvent(&a, &m, &g, &temp); 
 
 //  Serial.print(a.acceleration.x);
 //  Serial.print(" ");
@@ -100,6 +106,8 @@ void loop()
 //  else {
 //    rounds++; 
 //  }
+
+  Serial.println(LOW);
 }
 
 void setupESC() {
@@ -149,3 +157,6 @@ void setupLSM() {
   lsm.setupGyro(lsm.LSM9DS1_GYROSCALE_245DPS);
 }
 
+void ping(){
+  Serial.println(HIGH);
+}
