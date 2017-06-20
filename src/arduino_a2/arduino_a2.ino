@@ -25,7 +25,13 @@ long speed = 56;
 long rounds = 0;
 bool completeRound = false;
 
+bool measure = false;
+bool didOnce = false;
+
+bool foo = true;
 unsigned long time = 0;
+unsigned long timer = millis();
+unsigned long itrTime = 0;
 
 long foobar = 0;
 
@@ -77,18 +83,24 @@ void loop()
 //  Serial.println(sensor);
 //  Serial.print(" ");
 
-  lsm.read();  /* ask it to read in the data */ 
+  if (measure) {
+    lsm.read();  /* ask it to read in the data */ 
+  
+    /* Get a new sensor event */ 
+    sensors_event_t a, m, g, temp;
+  
+    lsm.getEvent(&a, &m, &g, &temp); 
 
-  /* Get a new sensor event */ 
-  sensors_event_t a, m, g, temp;
-
-  lsm.getEvent(&a, &m, &g, &temp); 
-
-//  Serial.print(a.acceleration.x);
-//  Serial.print(" ");
-//  Serial.print(a.acceleration.y);
-//  Serial.print(" ");
-//  Serial.println(a.acceleration.z);
+    Serial.print("Millis: ");
+    Serial.println(millis() - itrTime);
+    Serial.print("X: ");
+    Serial.println(a.acceleration.x);
+    Serial.print("Y: ");
+    Serial.println(a.acceleration.y);
+    Serial.print("Z: ");
+    Serial.println(a.acceleration.z);
+    Serial.println();
+  }
 
 //  if (millis() > (time + 24)) {
 //    //Serial.println(rounds);
@@ -107,7 +119,15 @@ void loop()
 //    rounds++; 
 //  }
 
-  Serial.println(LOW);
+//  Serial.println(LOW);
+
+  if (foo) {
+    if (millis() > (timer + 15000)) {
+      foo = false;
+      didOnce = true;
+      //Serial.println("didOnce");
+    } 
+  }
 }
 
 void setupESC() {
@@ -148,7 +168,7 @@ void setupLSM() {
   lsm.begin();
   
   // Set the accelerometer range
-  lsm.setupAccel(lsm.LSM9DS1_ACCELRANGE_2G);
+  lsm.setupAccel(lsm.LSM9DS1_ACCELRANGE_4G);
   
   // Set the magnetometer sensitivity
   lsm.setupMag(lsm.LSM9DS1_MAGGAIN_4GAUSS);
@@ -158,5 +178,15 @@ void setupLSM() {
 }
 
 void ping(){
-  Serial.println(HIGH);
+//  Serial.println(HIGH);
+  if (didOnce) {
+    if (measure == true) {
+      measure = false;
+      didOnce = false;
+    }
+    else {
+      itrTime = millis();
+      measure = true;
+    }
+  }
 }
