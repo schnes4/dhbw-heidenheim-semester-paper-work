@@ -26,7 +26,7 @@ long rounds = 0;
 bool completeRound = false;
 
 bool measure = false;
-bool didOnce = false;
+int didOnce = 0;
 
 bool foo = true;
 unsigned long time = 0;
@@ -91,15 +91,18 @@ void loop()
   
     lsm.getEvent(&a, &m, &g, &temp); 
 
-    Serial.print("Millis: ");
-    Serial.println(millis() - itrTime);
-    Serial.print("X: ");
-    Serial.println(a.acceleration.x);
-    Serial.print("Y: ");
-    Serial.println(a.acceleration.y);
+//    Serial.print("Millis: ");
+//    Serial.println(millis() - itrTime);
+//    Serial.print("X: ");
+//    Serial.println(a.acceleration.x);
+//    Serial.print("Y: ");
+//    Serial.println(a.acceleration.y);
+//    Serial.print("Z: ");
+//    Serial.println(a.acceleration.z);
+//    Serial.println();
+
     Serial.print("Z: ");
     Serial.println(a.acceleration.z);
-    Serial.println();
   }
 
 //  if (millis() > (time + 24)) {
@@ -124,7 +127,7 @@ void loop()
   if (foo) {
     if (millis() > (timer + 15000)) {
       foo = false;
-      didOnce = true;
+      didOnce = 1;
       //Serial.println("didOnce");
     } 
   }
@@ -179,10 +182,12 @@ void setupLSM() {
 
 void ping(){
 //  Serial.println(HIGH);
-  if (didOnce) {
+  if (didOnce > 0 && didOnce < 101) {
     if (measure == true) {
       measure = false;
-      didOnce = false;
+      didOnce++;
+
+      Serial.println("-------------------------------------------");
     }
     else {
       itrTime = millis();
