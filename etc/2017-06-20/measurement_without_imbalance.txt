@@ -1,0 +1,47 @@
+// ERGEBNIS EINS //
+Millis: 7
+X: 1.94
+Y: 0.11
+Z: 10.41
+
+Millis: 15
+X: 2.10
+Y: 0.86
+Z: 10.61
+
+Millis: 24
+X: -2.57
+Y: -0.29
+Z: 8.49
+
+// ERGEBNIS ZWEI //
+Millis: 8
+X: 0.56
+Y: -0.29
+Z: 10.10
+
+Millis: 16
+X: -0.24
+Y: 0.08
+Z: 9.54
+
+Millis: 25
+X: -2.11
+Y: -0.16
+Z: 7.55
+
+// ERGEBNIS DREI //
+Millis: 9
+X: 4.12
+Y: 0.46
+Z: 11.16
+
+Millis: 17
+X: -0.34
+Y: 0.39
+Z: 9.26
+
+Millis: 25
+X: 1.79
+Y: -0.09
+Z: 10.13

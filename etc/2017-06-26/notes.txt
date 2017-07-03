@@ -1,0 +1,8 @@
+Folgendes Verhalten aufgefallen bei dem IR-Sensor:
+
+Bei dem Experiment in "freier Natur" konnten keine Reflektionen mehr detektiert werden. Dies ist wahrscheinlich ein verursachtes Problem des erhöhten Aufkommens von Sonnenstrahlen.
+Beim Bedecken des Experimentaufbaus mit einer Decke hingegen kam es zum gegenteiligen Effekt. Hier kam es selbst bei der schwarzen Fläche zu einer Reflektion.
+
+------
+
+Beim Messen der verwuchteten Propeller, welche mit kleinen Muttern beklebt waren, wurden vom 9-DOF nur noch zwei Werte gelesen. Da dies zu wenig waren um eine aussagekräftige Messung zu bekommen, wurde in der 'twi.h' (Arduino-Library) die I2C Frequenz von 100khz auf 400khz erhöht.
